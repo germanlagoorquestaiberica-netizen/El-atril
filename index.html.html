@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>El Atril — Ángel · Música, Pedagogía y Repertorio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #F7F3EC;
+    --paper:   #EDE8DE;
+    --charcoal:#1E1C18;
+    --ink:     #2F2C26;
+    --warm:    #7A6A4F;
+    --gold:    #B59A6A;
+    --gold-lt: #D4B98A;
+    --accent:  #8B4513;
+    --line:    rgba(181,154,106,0.28);
+    --serif:   'Cormorant Garamond', Georgia, serif;
+    --sans:    'Jost', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(247,243,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex; gap: 2.4rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm);
+    text-decoration: none;
+    transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--charcoal); }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 5vw;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(181,154,106,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 10% 80%, rgba(139,69,19,0.05) 0%, transparent 60%),
+      var(--cream);
+  }
+  /* Staff lines decoration */
+  .staff {
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 55vw; height: 280px;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .staff line { stroke: var(--charcoal); stroke-width: 1.5; }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 680px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.8rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 7vw, 6.2rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--charcoal);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm);
+    margin-bottom: 2.6rem;
+    letter-spacing: 0.01em;
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--warm);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 2.2rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background .25s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 2.2rem;
+    background: transparent;
+    color: var(--charcoal);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    transition: border-color .25s, color .25s, transform .2s;
+  }
+  .btn-secondary:hover { border-color: var(--charcoal); color: var(--charcoal); transform: translateY(-2px); }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 5vw;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 0.8rem;
+    animation: fadeUp 1.4s ease both;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block; width: 1px; height: 40px;
+    background: var(--gold);
+    animation: grow 2s ease-in-out infinite;
+    transform-origin: top;
+  }
+
+  /* ── PILARES ─────────────────────────────── */
+  .section { padding: 8rem 5vw; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .section-intro {
+    font-size: 0.93rem;
+    color: var(--warm);
+    max-width: 520px;
+    line-height: 1.85;
+    margin-bottom: 4rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .pillar {
+    background: var(--cream);
+    padding: 3rem 2.4rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background .3s;
+  }
+  .pillar::before {
+    content: attr(data-num);
+    position: absolute; top: 1.8rem; right: 2rem;
+    font-family: var(--serif);
+    font-size: 4.5rem;
+    font-weight: 300;
+    color: var(--line);
+    line-height: 1;
+    transition: color .3s;
+  }
+  .pillar:hover { background: var(--paper); }
+  .pillar:hover::before { color: rgba(181,154,106,0.18); }
+  .pillar-icon {
+    width: 44px; height: 44px;
+    margin-bottom: 1.6rem;
+    color: var(--gold);
+  }
+  .pillar-name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .pillar-desc {
+    font-size: 0.86rem;
+    color: var(--warm);
+    line-height: 1.8;
+  }
+  .pillar-tag {
+    display: inline-block;
+    margin-top: 1.4rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  /* ── ARTÍCULOS DESTACADOS ────────────────── */
+  .articles-section {
+    padding: 8rem 5vw;
+    background: var(--charcoal);
+    color: var(--cream);
+  }
+  .articles-section .section-label { color: var(--gold-lt); }
+  .articles-section .section-title { color: var(--cream); }
+  .articles-section .section-intro { color: rgba(237,232,222,0.6); }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  @media(max-width:780px){
+    .articles-grid { grid-template-columns: 1fr; }
+  }
+
+  .article-card {
+    background: var(--charcoal);
+    padding: 2.8rem 2.4rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+  .article-card:hover { background: #2a2822; }
+  .article-card.featured { padding: 3.4rem 3rem; }
+  .article-cat {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+  .article-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .article-card.featured .article-title { font-size: 1.75rem; margin-bottom: 1.4rem; }
+  .article-card:not(.featured) .article-title { font-size: 1.2rem; }
+  .article-excerpt {
+    font-size: 0.85rem;
+    color: rgba(237,232,222,0.55);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .article-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(237,232,222,0.35);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .article-meta span { color: var(--gold); opacity: 0.6; }
+  .article-divider {
+    width: 32px; height: 1px;
+    background: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0.4;
+  }
+
+  /* ── RECURSO GRATUITO ────────────────────── */
+  .gift-section {
+    padding: 8rem 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  @media(max-width:720px){
+    .gift-section { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  .gift-visual {
+    position: relative;
+    display: flex; justify-content: center;
+  }
+  .gift-card {
+    width: 280px; height: 360px;
+    background: var(--charcoal);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 24px 24px 0 var(--paper), 24px 24px 0 1px var(--gold);
+  }
+  .gift-card-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 18px,
+      rgba(181,154,106,0.05) 18px,
+      rgba(181,154,106,0.05) 19px
+    );
+  }
+  .gift-card-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .gift-card-title {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.15;
+    font-style: italic;
+  }
+  .gift-card-sub {
+    font-size: 0.78rem;
+    color: rgba(237,232,222,0.4);
+    margin-top: 0.5rem;
+  }
+
+  .gift-content .section-title { margin-bottom: 1rem; }
+  .gift-desc {
+    font-size: 0.92rem;
+    color: var(--warm);
+    line-height: 1.85;
+    margin-bottom: 2.4rem;
+    max-width: 420px;
+  }
+  .gift-form {
+    display: flex; gap: 0;
+    max-width: 420px;
+  }
+  .gift-form input {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--gold);
+    border-right: none;
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color .25s;
+  }
+  .gift-form input::placeholder { color: var(--gold); opacity: 0.5; }
+  .gift-form input:focus { border-color: var(--charcoal); }
+  .gift-form button {
+    padding: 0.9rem 1.6rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--charcoal);
+    cursor: pointer;
+    transition: background .25s;
+    white-space: nowrap;
+  }
+  .gift-form button:hover { background: var(--accent); border-color: var(--accent); }
+  .gift-note {
+    font-size: 0.72rem;
+    color: var(--gold);
+    margin-top: 1rem;
+    opacity: 0.7;
+  }
+
+  /* ── SOBRE ÁNGEL ─────────────────────────── */
+  .about-section {
+    padding: 7rem 5vw;
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  @media(max-width:720px){
+    .about-section { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  .about-portrait {
+    position: relative;
+  }
+  .portrait-frame {
+    width: 100%; max-width: 340px;
+    aspect-ratio: 3/4;
+    background: var(--warm);
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-frame::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(247,243,236,0.04) 3px, rgba(247,243,236,0.04) 4px
+    );
+  }
+  .portrait-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    color: rgba(247,243,236,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .portrait-placeholder svg { opacity: 0.3; }
+  .portrait-accent {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    width: 80px; height: 80px;
+    border: 1.5px solid var(--gold);
+    opacity: 0.5;
+  }
+
+  .about-content .section-label { margin-bottom: 1.4rem; }
+  .about-name {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+  .about-role {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+  .about-bio {
+    font-size: 0.92rem;
+    color: var(--warm);
+    line-height: 1.9;
+    margin-bottom: 2.4rem;
+  }
+  .about-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+  }
+  .tag {
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--line);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm);
+    background: transparent;
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    padding: 4rem 5vw 3rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--warm);
+    opacity: 0.6;
+    margin-top: 0.4rem;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+  }
+  .footer-links a:hover { opacity: 1; }
+
+  /* ── ANIMATIONS ──────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes grow {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50%      { transform: scaleY(0.4); opacity: 0.4; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── SEPARADOR MUSICAL ───────────────────── */
+  .music-sep {
+    display: flex; align-items: center; gap: 1.4rem;
+    margin-bottom: 3.5rem;
+  }
+  .music-sep-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0.3;
+  }
+  .music-sep-symbol {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  @media(max-width:600px){
+    .nav-links { display: none; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .gift-form { flex-direction: column; }
+    .gift-form input { border-right: 1px solid var(--gold); border-bottom: none; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">El <span>Atril</span></a>
+  <ul class="nav-links">
+    <li><a href="#pilares">Temas</a></li>
+    <li><a href="#articulos">Artículos</a></li>
+    <li><a href="#regalo">Partitura gratis</a></li>
+    <li><a href="#sobre">El autor</a></li>
+    <li><a href="#">Tienda</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Staff lines SVG -->
+  <svg class="staff" viewBox="0 0 800 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="56"  x2="800" y2="56"/>
+    <line x1="0" y1="112" x2="800" y2="112"/>
+    <line x1="0" y1="168" x2="800" y2="168"/>
+    <line x1="0" y1="224" x2="800" y2="224"/>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Música · Pedagogía · Repertorio</p>
+    <h1 class="hero-title">El <em>Atril</em></h1>
+    <p class="hero-subtitle">El espacio donde la música se aprende, se lee y se siente</p>
+    <p class="hero-desc">
+      Artículos rigurosos sobre guitarra española, laúd, bandurria y dirección orquestal. 
+      Aprendizaje gradual, partituras seleccionadas y el conocimiento de quienes 
+      dedican su vida a la música.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#articulos">Explorar artículos ↓</a>
+      <a class="btn-secondary" href="#regalo">Partitura gratuita</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Descubre</div>
+</section>
+
+<!-- PILARES -->
+<section class="section" id="pilares">
+  <p class="section-label reveal">Cuatro pilares</p>
+  <h2 class="section-title reveal">Lo que encontrarás<br>en El Atril</h2>
+  <p class="section-intro reveal">Cada publicación pertenece a uno de estos cuatro territorios. 
+  Así sabes siempre qué esperar y dónde profundizar.</p>
+
+  <div class="pillars-grid">
+
+    <div class="pillar reveal" data-num="I">
+      <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4">
+        <circle cx="22" cy="22" r="18"/>
+        <path d="M16 30 Q22 12 28 30"/>
+        <line x1="18" y1="24" x2="26" y2="24"/>
+      </svg>
+      <p class="pillar-name">Aprende con Ángel</p>
+      <p class="pillar-desc">Pedagogía musical graduada. Desde los fundamentos de la armonía hasta el análisis de repertorio avanzado. Para estudiantes y músicos en formación.</p>
+      <span class="pillar-tag">Pedagogía</span>
+    </div>
+
+    <div class="pillar reveal" data-num="II">
+      <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4">
+        <rect x="8" y="6" width="28" height="36" rx="1"/>
+        <line x1="14" y1="16" x2="30" y2="16"/>
+        <line x1="14" y1="22" x2="30" y2="22"/>
+        <line x1="14" y1="28" x2="24" y2="28"/>
+        <path d="M27 32 l5-5 2 2-5 5z M30 28 l2 2"/>
+      </svg>
+      <p class="pillar-name">El Rincón del Repertorio</p>
+      <p class="pillar-desc">Cada partitura cuenta una historia. Aquí presentamos obras del catálogo con su contexto histórico, análisis técnico y posibilidades de compra.</p>
+      <span class="pillar-tag">Partituras &amp; Arreglos</span>
+    </div>
+
+    <div class="pillar reveal" data-num="III">
+      <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M8 36 Q14 10 22 24 Q30 38 36 8"/>
+        <circle cx="22" cy="24" r="2" fill="currentColor" stroke="none"/>
+      </svg>
+      <p class="pillar-name">Historia Viva de la Música</p>
+      <p class="pillar-desc">Los instrumentos de plectro, los grandes maestros olvidados, las obras que cambiaron un período. Cultura musical con rigor y pasión narrativa.</p>
+      <span class="pillar-tag">Cultura Musical</span>
+    </div>
+
+    <div class="pillar reveal" data-num="IV">
+      <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.4">
+        <circle cx="22" cy="14" r="5"/>
+        <path d="M12 38 Q12 28 22 28 Q32 28 32 38"/>
+        <line x1="8" y1="22" x2="14" y2="22"/>
+        <line x1="30" y1="22" x2="36" y2="22"/>
+      </svg>
+      <p class="pillar-name">Directo al Grano</p>
+      <p class="pillar-desc">Respuestas concretas a las preguntas más frecuentes. Píldoras breves que resuelven dudas reales: técnica, instrumento, estudio, repertorio.</p>
+      <span class="pillar-tag">Dudas &amp; Respuestas</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ARTÍCULOS -->
+<section class="articles-section" id="articulos">
+  <p class="section-label reveal">Últimas publicaciones</p>
+  <h2 class="section-title reveal">En el atril esta semana</h2>
+  <p class="section-intro reveal">Dos publicaciones semanales, cada martes y viernes. 
+  Rigor académico con lenguaje accesible.</p>
+
+  <div class="articles-grid">
+
+    <a class="article-card featured reveal" href="#">
+      <p class="article-cat">Historia Viva de la Música</p>
+      <div class="article-divider"></div>
+      <h3 class="article-title">El plectro español: el instrumento que Europa olvidó durante tres siglos</h3>
+      <p class="article-excerpt">La bandurria y el laúd español tienen una genealogía tan rica como desconocida. Rastreamos su huella desde el Renacimiento hasta los arreglos de hoy.</p>
+      <p class="article-meta">Viernes, 9 mayo 2025 <span>·</span> 8 min lectura</p>
+    </a>
+
+    <a class="article-card reveal" href="#">
+      <p class="article-cat">Aprende con Ángel</p>
+      <div class="article-divider"></div>
+      <h3 class="article-title">¿Qué es la tonalidad? La base que nadie te explicó bien</h3>
+      <p class="article-meta">Martes, 6 mayo 2025 <span>·</span> 5 min</p>
+    </a>
+
+    <a class="article-card reveal" href="#">
+      <p class="article-cat">Rincón del Repertorio</p>
+      <div class="article-divider"></div>
+      <h3 class="article-title">Petit Jeux para bandurria: análisis y notas de interpretación</h3>
+      <p class="article-meta">Viernes, 2 mayo 2025 <span>·</span> 6 min</p>
+    </a>
+
+  </div>
+
+  <div style="margin-top:3rem; text-align:center;">
+    <a class="btn-secondary" href="#" style="color:var(--cream); border-color:rgba(181,154,106,0.4);">Ver todos los artículos →</a>
+  </div>
+</section>
+
+<!-- REGALO -->
+<section class="gift-section section" id="regalo">
+
+  <div class="gift-visual reveal">
+    <div class="gift-card">
+      <div class="gift-card-bg"></div>
+      <p class="gift-card-label">Descarga gratuita</p>
+      <p class="gift-card-title">Petit Jeux<br>para Bandurria</p>
+      <p class="gift-card-sub">Con análisis técnico y notas al intérprete · PDF</p>
+    </div>
+  </div>
+
+  <div class="gift-content reveal">
+    <p class="section-label">Recurso gratuito</p>
+    <h2 class="section-title">Una partitura,<br>como punto de partida</h2>
+    <p class="gift-desc">
+      Descarga gratuitamente <em>Petit Jeux</em> para bandurria con su análisis técnico incluido. 
+      A cambio, te enviaré cada semana los mejores artículos de El Atril 
+      directamente a tu correo. Sin ruido, solo música.
+    </p>
+    <div class="gift-form">
+      <input type="email" placeholder="tu@correo.com" />
+      <button type="button">Descargar gratis</button>
+    </div>
+    <p class="gift-note">Sin spam. Baja cuando quieras. Respeto tu privacidad.</p>
+  </div>
+
+</section>
+
+<!-- SOBRE ÁNGEL -->
+<section class="about-section" id="sobre">
+
+  <div class="about-portrait reveal">
+    <div class="portrait-frame">
+      <div class="portrait-placeholder">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.2">
+          <circle cx="28" cy="20" r="10"/>
+          <path d="M8 52 Q8 36 28 36 Q48 36 48 52"/>
+        </svg>
+        <span>Tu fotografía</span>
+      </div>
+    </div>
+    <div class="portrait-accent"></div>
+  </div>
+
+  <div class="about-content">
+    <p class="section-label reveal">El autor</p>
+    <h2 class="about-name reveal">Ángel</h2>
+    <p class="about-role reveal">Guitarrista · Director de Orquesta · Pedagogo Musical</p>
+    <p class="about-bio reveal">
+      Nacido en Madrid y afincado en Colmenar de Oreja, Ángel es músico, 
+      pedagogo y escritor con una trayectoria volcada en la guitarra española, 
+      los instrumentos de plectro y la dirección orquestal. 
+      Sus publicaciones y métodos combinan el rigor académico del Conservatorio Superior 
+      con una vocación didáctica accesible para músicos de todos los niveles.
+    </p>
+    <div class="about-tags reveal">
+      <span class="tag">Guitarra Española</span>
+      <span class="tag">Bandurria</span>
+      <span class="tag">Laúd Español</span>
+      <span class="tag">Dirección Orquestal</span>
+      <span class="tag">Armonía</span>
+      <span class="tag">Arreglos</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <p class="footer-logo">El <span>Atril</span></p>
+    <p class="footer-copy">© 2025 Ángel · Música, Pedagogía y Repertorio</p>
+  </div>
+  <nav class="footer-links">
+    <a href="#">Artículos</a>
+    <a href="#">Tienda</a>
+    <a href="#">Contacto</a>
+    <a href="#">Privacidad</a>
+  </nav>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
